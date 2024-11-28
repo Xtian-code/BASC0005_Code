@@ -6,7 +6,7 @@ This repository is dedicated to documenting my learning process in **BASC0005**.
 ### What you'll find here:
 - 📘 **Course notes and key concepts**  
 - 📝 **Problem-solving exercises and solutions**  
-- 💡 **Personal insights and learning reflections**
+- 💡 **Personal thoughts and learning reflections**
 
 ---
 
