@@ -17,7 +17,6 @@ df_cleaned['log_revenue'] = np.log(df_cleaned['revenue'] + 1)  # Avoid log(0)
 df_cleaned['log_copiesSold'] = np.log(df_cleaned['copiesSold'] + 1)
 
 # 3. Regression Analysis Function
-
 def perform_regression(df, dependent_var, independent_var):
     results = {}
     grouped = df.groupby('Genre')
@@ -39,7 +38,7 @@ def perform_regression(df, dependent_var, independent_var):
         results[genre] = summary
     return results
 
-# 4. Visualization Function with Pearson Correlation
+# 4. Visualisation Function with Pearson Correlation
 def plot_scatter_with_regression(df, x_var, y_var):
     genres = df['Genre'].unique()
     for genre in genres:
@@ -68,14 +67,14 @@ def plot_scatter_with_regression(df, x_var, y_var):
 revenue_results = perform_regression(df_cleaned, 'log_revenue', 'reviewScore')
 copies_sold_results = perform_regression(df_cleaned, 'log_copiesSold', 'reviewScore')
 
-# 6. Visualize Revenue vs Review Score
+# 6. Visualise Revenue vs Review Score
 print("\n--- Revenue Regression Results ---\n")
 for genre, summary in revenue_results.items():
     print(f"{genre} Games:\n{summary}")
 
 plot_scatter_with_regression(df_cleaned, 'reviewScore', 'log_revenue')
 
-# 7. Visualize Copies Sold vs Review Score
+# 7. Visualise Copies Sold vs Review Score
 print("\n--- Copies Sold Regression Results ---\n")
 for genre, summary in copies_sold_results.items():
     print(f"{genre} Games:\n{summary}")
