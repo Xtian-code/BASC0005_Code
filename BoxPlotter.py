@@ -1,24 +1,35 @@
+# Import necessary libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# 加载上传的 Excel 文件
+# Define the file path for the Excel file
 file_path = 'reviewscore.xlsx'
+
+# Load the Excel file
 data = pd.ExcelFile(file_path)
 
-# 读取第一个工作表的数据
+# Parse the first sheet into a DataFrame
 df = data.parse('Sheet1')
 
-# 将数据从宽格式转换为长格式，方便绘制箱线图
-df_long = df.melt(var_name="genre", value_name="reviewscore", value_vars=["Independent", "Casual", "Action"])
+# Reshape the data from wide format to long format for easier visualization
+df_long = df.melt(
+    var_name="genre",                # Column to store variable names
+    value_name="reviewscore",        # Column to store values
+    value_vars=["Independent", "Casual", "Action"]  # Columns to unpivot
+)
 
-# 清理数据：移除包含 NaN 值的行
+# Drop rows with missing values to ensure clean data
 df_long = df_long.dropna()
 
-# 绘制箱线图
-plt.figure(figsize=(8, 6))
-df_long.boxplot(column="reviewscore", by="genre", grid=False)
-plt.title("Review Score Comparison by Genre")
-plt.suptitle("")  # 移除默认的副标题
-plt.xlabel("Genre")
-plt.ylabel("Review Score")
+# Create the boxplot
+plt.figure(figsize=(8, 6))  # Set figure size
+df_long.boxplot(column="reviewscore", by="genre", grid=False)  # Generate boxplot
+
+# Add titles and labels
+plt.title("Review Score Comparison by Genre")  # Title of the plot
+plt.suptitle("")  # Remove the default Matplotlib subtitle
+plt.xlabel("Genre")  # Label for the x-axis
+plt.ylabel("Review Score")  # Label for the y-axis
+
+# Display the plot
 plt.show()
