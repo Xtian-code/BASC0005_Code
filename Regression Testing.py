@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-# 1. Load Data
+# Load Data
 file_path = 'All_games_vf.xlsx'
 df = pd.ExcelFile(file_path).parse('DB')
 
-# 2. Data Cleaning
+# Data Cleaning
 columns_to_keep = ['Genre', 'reviewScore', 'revenue', 'copiesSold', 'price', 'firstReleaseDate']
 df_cleaned = df[columns_to_keep].dropna()
 
@@ -16,7 +16,7 @@ df_cleaned = df[columns_to_keep].dropna()
 df_cleaned['log_revenue'] = np.log(df_cleaned['revenue'] + 1)  # Avoid log(0)
 df_cleaned['log_copiesSold'] = np.log(df_cleaned['copiesSold'] + 1)
 
-# 3. Regression Analysis Function
+# Regression Analysis Function
 def perform_regression(df, dependent_var, independent_var):
     results = {}
     grouped = df.groupby('Genre')
@@ -38,7 +38,7 @@ def perform_regression(df, dependent_var, independent_var):
         results[genre] = summary
     return results
 
-# 4. Visualisation Function with Pearson Correlation
+# Visualisation Function with Pearson Correlation
 def plot_scatter_with_regression(df, x_var, y_var):
     genres = df['Genre'].unique()
     for genre in genres:
@@ -63,18 +63,18 @@ def plot_scatter_with_regression(df, x_var, y_var):
         plt.ylabel(y_var)
         plt.show()
 
-# 5. Perform Regression for Revenue and Copies Sold
+# Perform Regression for Revenue and Copies Sold
 revenue_results = perform_regression(df_cleaned, 'log_revenue', 'reviewScore')
 copies_sold_results = perform_regression(df_cleaned, 'log_copiesSold', 'reviewScore')
 
-# 6. Visualise Revenue vs Review Score
+# Visualise Revenue vs Review Score
 print("\n--- Revenue Regression Results ---\n")
 for genre, summary in revenue_results.items():
     print(f"{genre} Games:\n{summary}")
 
 plot_scatter_with_regression(df_cleaned, 'reviewScore', 'log_revenue')
 
-# 7. Visualise Copies Sold vs Review Score
+# Visualise Copies Sold vs Review Score
 print("\n--- Copies Sold Regression Results ---\n")
 for genre, summary in copies_sold_results.items():
     print(f"{genre} Games:\n{summary}")
